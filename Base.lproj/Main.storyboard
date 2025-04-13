@@ -68,6 +68,9 @@
                                             </label>
                                             <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="QSg-mC-Oje">
                                                 <rect key="frame" x="271" y="0.0" width="51" height="31"/>
+                                                <connections>
+                                                    <action selector="sortDirectionChanged:" destination="lq3-qb-TkS" eventType="valueChanged" id="nmf-Xm-TKp"/>
+                                                </connections>
                                             </switch>
                                         </subviews>
                                     </stackView>
@@ -82,6 +85,10 @@
                         </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="Settings" image="sample-834-bolt" id="AAk-mH-ArT"/>
+                    <connections>
+                        <outlet property="pckSortField" destination="eA6-xO-V2n" id="F7v-EL-hE4"/>
+                        <outlet property="swAscending" destination="QSg-mC-Oje" id="BYN-jG-Ab5"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Tt2-AN-BPu" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>

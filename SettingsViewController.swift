@@ -9,6 +9,10 @@ import UIKit
 
 class SettingsViewController: UIViewController {
 
+    @IBOutlet weak var pckSortField: UIPickerView!
+    
+    @IBOutlet weak var swAscending: UISwitch!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -26,4 +30,6 @@ class SettingsViewController: UIViewController {
     }
     */
 
+    @IBAction func sortDirectionChanged(_ sender: Any) {
+    }
 }
