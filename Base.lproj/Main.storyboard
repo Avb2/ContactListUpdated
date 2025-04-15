@@ -69,6 +69,7 @@
                                             <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="QSg-mC-Oje">
                                                 <rect key="frame" x="271" y="0.0" width="51" height="31"/>
                                                 <connections>
+                                                    <action selector="sortDirectionChange:" destination="lq3-qb-TkS" eventType="valueChanged" id="9BU-Ba-NWN"/>
                                                     <action selector="sortDirectionChanged:" destination="lq3-qb-TkS" eventType="valueChanged" id="nmf-Xm-TKp"/>
                                                 </connections>
                                             </switch>
