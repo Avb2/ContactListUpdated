@@ -13,6 +13,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+        
+        let settings = UserDefaults.standard
+        
+        if settings.string(forKey: "sortField") == nil {
+            settings.set("City", forKey: "sortField")
+        }
+        
+        if settings.string(forKey: "sortDirectionAscending") == nil {
+            settings.set(true, forKey: "sortDirectionAscending")
+        }
+        
+        settings.synchronize()
+        return true
+
+
         // Override point for customization after application launch.
         return true
     }
