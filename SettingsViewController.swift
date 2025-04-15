@@ -28,6 +28,7 @@ class SettingsViewController: UIViewController, UIPickerViewDataSource, UIPicker
         pckSortField.reloadComponent(0)
     }
     
+
     @IBAction func sortDirectionChanged(_ sender: Any) {
         let settings = UserDefaults.standard
         settings.set(swAscending.isOn, forKey: Constants.kSortDirectionAscending)
