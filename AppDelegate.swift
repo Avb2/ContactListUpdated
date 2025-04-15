@@ -26,10 +26,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         settings.synchronize()
         return true
-
-
-        // Override point for customization after application launch.
-        return true
     }
 
     // MARK: UISceneSession Lifecycle
