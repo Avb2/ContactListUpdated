@@ -7,7 +7,7 @@
 import UIKit
 import CoreData
 
-class ContactsViewController: UIViewController, UITextFieldDelegate {
+class ContactsViewController: UIViewController, UITextFieldDelegate, DateControllerDelegate {
     var currentContact: Contact?
     let appDelegate = UIApplication.shared.delegate as! AppDelegate
     
@@ -31,6 +31,24 @@ class ContactsViewController: UIViewController, UITextFieldDelegate {
     
     @IBOutlet weak var btnChange: UIButton!
     @IBOutlet weak var labelBirthdate: UILabel!
+    
+    func dateChanged(date: Date) {
+        if currentContact == nil {
+            let context = appDelegate.persistentContainer.viewContext
+            currentContact = Contact(context: context)
+        }
+        currentContact?.birthday = date
+        let formatter = DateFormatter()
+        formatter.dateStyle = .short
+        labelBirthdate.text = formatter.string(from: date)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "segueContactDate" {
+            let dateController = segue.destination as! BirthdateViewController
+            dateController.delegate = self
+        }
+    }
     
     
     override func viewDidLoad() {
@@ -78,6 +96,7 @@ class ContactsViewController: UIViewController, UITextFieldDelegate {
                 textField.borderStyle = UITextField.BorderStyle.none
             }
             btnChange.isHidden = false
+            navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .save, target: self, action: #selector(self.saveContact))
         }
         
         if sgmtEditMode.selectedSegmentIndex == 1 {
@@ -85,9 +104,23 @@ class ContactsViewController: UIViewController, UITextFieldDelegate {
                 textField.isEnabled = true
                 textField.borderStyle = UITextField.BorderStyle.roundedRect
             }
-            btnChange.isHidden = false
+            btnChange.isHidden = true
+            
+            navigationItem.rightBarButtonItem = nil
         }
     }
     
+    
+    @objc func saveContact() {
+
+        appDelegate.saveContext()
+
+        sgmtEditMode.selectedSegmentIndex = 0
+
+        changeEditMode(self)
+
+    }
+
+
 
 }

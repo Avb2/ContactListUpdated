@@ -331,6 +331,9 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="3mt-7P-6fF"/>
+                    <connections>
+                        <outlet property="dtpDate" destination="fiO-Ev-3Uh" id="8EE-bW-ln8"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="mi4-YC-JaB" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
