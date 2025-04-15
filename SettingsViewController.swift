@@ -14,6 +14,20 @@ class SettingsViewController: UIViewController, UIPickerViewDataSource, UIPicker
     
     let sortOrderItems: Array<String> = ["ContactName", "City", "Birthday"]
     
+    override func viewWillAppear(_ animated: Bool){
+        let settings = UserDefaults.standard
+        swAscending.setOn(settings.bool(forKey: "sortDirectionAscending"), animated: true)
+        let sortField = settings.string(forKey: "sortField")
+         var i = 0
+        for field in sortOrderItems{
+            if field == sortField {
+                pckSortField.selectRow(i, inComponent: 0, animated: false)
+            }
+            i += 1
+        }
+        pckSortField.reloadComponent(0)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
