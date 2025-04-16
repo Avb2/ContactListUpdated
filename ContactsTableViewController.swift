@@ -16,7 +16,13 @@ class ContactsTableViewController: UITableViewController {
     override func viewDidLoad(){
         super.viewDidLoad()
         loadDataFromDatabase()
+        self.navigationItem.leftBarButtonItem = self.editButtonItem
         
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        loadDataFromDatabase()
+        tableView.reloadData()
     }
     
     override func didReceiveMemoryWarning(){
@@ -42,14 +48,21 @@ class ContactsTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell{
-        let cell = tableView.dequeueReusableCell(withIdentifier: "ContactsCell", for: indexPath)
-        
-        let contact = contacts[indexPath.row] as? Contact
-        
-        cell.textLabel?.text = contact?.city
-        
-        cell.accessoryType = UITableViewCell.AccessoryType .detailDisclosureButton
-        return cell
+        if editingStyle == .delete {
+            let contact = contacts[indexPath.row] as? Contact
+            let context = appDelegate.persistentContainer.viewContext
+            context.delete(contact!)
+            do {
+                try context.save()
+            } catch {
+                fatalError("Error saving context: \(error)")
+                
+            }
+            loadDataFromDatabase()
+            tableView.deleteRows(at: [indexPath], with: .fade)
+        } else if editingStyle == .insert {
+            
+        }
     }
     
     
