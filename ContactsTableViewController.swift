@@ -9,7 +9,7 @@ import UIKit
 import CoreData
 
 
-class ContactsTableViewController: UITableView {
+class ContactsTableViewController: UITableViewController {
     var contacts: [NSManagedObject] = []
     let appDelegate = UIApplication.shared.delegate as! AppDelegate
     
@@ -36,8 +36,12 @@ class ContactsTableViewController: UITableView {
         return 1
     }
     
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: UITableVieCell) {
-        let cell = tableView.dequeReusableCell(withIdentifier: "ContactsCell", for: indexPath)
+    override func tableView(_ tableView:UITableView, numberOfRowsInSection section: Int) -> Int {
+        return contacts.count
+    }
+    
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell{
+        let cell = tableView.dequeueReusableCell(withIdentifier: "ContactsCell", for: indexPath)
         
         let contact = contacts[indexPath.row] as? Contact
         
@@ -46,12 +50,7 @@ class ContactsTableViewController: UITableView {
         return cell
     }
     
-    
-    override func tableView(_ tableview:, TableView, cellForRowAt: IndexPath) -> UITableViewCell {
-        let cell = tableview.dequeueReusableCell(withIdentifier: "ContactsCell", for: indexPath)
-        cell.textLabel?.text = contacts[indexPath.row]
-        return cell
-    }
+
     
     
 
