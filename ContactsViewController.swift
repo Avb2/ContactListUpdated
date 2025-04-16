@@ -42,7 +42,7 @@ class ContactsViewController: UIViewController, UITextFieldDelegate, DateControl
         formatter.dateStyle = .short
         labelBirthdate.text = formatter.string(from: date)
     }
-    
+                                                                          
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "segueContactDate" {
             let dateController = segue.destination as! BirthdateViewController
