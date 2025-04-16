@@ -30,12 +30,23 @@ class ContactsTableViewController: UITableViewController {
     }
     
     func loadDataFromDatabase() {
+        let settings = UserDefaults.standard
+        let sortField = settings.string(forKey: Constants.kSortField)
+        let sortAscending = settings.bool(forKey: Constants.kSortDirectionAscending)
+        
         let context = appDelegate.persistentContainer.viewContext
+        
         let request = NSFetchRequest<NSManagedObject>(entityName: "Contact")
+        
+        let sortDescriptor = NSSortDescriptor(key: sortField, ascending: sortAscending)
+        let sortDescriptorArray = [sortDescriptor]
+        
+        request.sortDescriptors = sortDescriptorArray
+        
         do {
             contacts = try context.fetch(request)
         } catch let error as NSError {
-            print("Could not fetch. \(error), \(error.userInfo)")
+            print("Could not fetch: \(error), \(error.userInfo)")
         }
     }
     
@@ -47,7 +58,45 @@ class ContactsTableViewController: UITableViewController {
         return contacts.count
     }
     
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell{
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let selectedContact = contacts[indexPath.row] as? Contact
+        let name = selectedContact!.contactName!
+        let actionHandler = {
+            (action: UIAlertAction!) -> Void in
+            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+            let controller = storyboard.instantiateViewController(withIdentifier: "ContactController") as? ContactsViewController
+            
+            controller?.currentContact = selectedContact
+            self.navigationController?.pushViewController(controller!, animated: true)
+        }
+        
+        let alertController = UIAlertController(title: "Contact selected", message: "Selected Row: \(indexPath.row) (\(name))",
+                                                preferredStyle: .alert)
+        
+        let actionCancel = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
+        let actionDetails = UIAlertAction(title: "Show Details", style: .default, handler: actionHandler)
+        
+        alertController.addAction(actionCancel)
+        alertController.addAction(actionDetails)
+        
+        present(alertController, animated: true, completion: nil)
+    }
+    
+    override func tableView(_ tableView: UITableView,
+                            cellForRowAt indexPath: IndexPath) -> UITableViewCell{
+        let cell = tableView.dequeueReusableCell(withIdentifier: "ContactsCell", for: indexPath)
+        
+        let contact = contacts[indexPath.row] as? Contact
+        
+        cell.textLabel?.text = contact?.city
+        
+        cell.accessoryType = UITableViewCell.AccessoryType .detailDisclosureButton
+        return cell
+    }
+    
+    override func tableView(_ tableView: UITableView,
+                            commit editingStyle: UITableViewCell.EditingStyle,
+                            forRowAt indexPath: IndexPath){
         if editingStyle == .delete {
             let contact = contacts[indexPath.row] as? Contact
             let context = appDelegate.persistentContainer.viewContext
