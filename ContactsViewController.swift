@@ -51,18 +51,33 @@ class ContactsViewController: UIViewController, UITextFieldDelegate, DateControl
     }
     
     
-    override func viewDidLoad() {
+    override func viewDidLoad(){
         super.viewDidLoad()
-        self.changeEditMode(self)
-        
-        let textFields: [UITextField] = [
-            txtName, txtAddress, txtCity, txtState, txtZip, txtPhone, txtCell, txtEmail
-        ]
-        
-        for textField in textFields {
-            textField.addTarget(self, action: #selector(UITextFieldDelegate.textFieldShouldEndEditing(_:)), for: UIControl.Event.editingDidEnd)
+        if currentContact != nil {
+            txtName.text = currentContact!.contactName
+            txtAddress.text = currentContact!.streetAddress
+            txtCity.text = currentContact!.city
+            txtState.text = currentContact!.state
+            txtZip.text = currentContact!.zipcode
+            txtPhone.text = currentContact!.phoneNumber
+            txtCell.text = currentContact!.cellNumber
+            txtEmail.text = currentContact!.email
+            let formatter = DateFormatter()
+            formatter.dateStyle = .short
+            if currentContact!.birthday != nil {
+                labelBirthdate.text = formatter.string(from: currentContact!.birthday as! Date)
+            }
         }
         
+        changeEditMode(self)
+        let textFields: [UITextField] = [txtName, txtAddress, txtCity, txtState, txtZip, txtPhone, txtCell, txtEmail]
+        
+        for textfield in textFields{
+            textfield.addTarget(self,
+                                action: #selector(UITextFieldDelegate.textFieldShouldEndEditing(_:)),
+                                for: UIControl.Event.editingDidEnd)
+            
+        }
     }
     
     func textFieldShouldEndEditing(_ textField: UITextField) -> Bool {

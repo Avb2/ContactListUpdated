@@ -323,6 +323,9 @@
                                     <rect key="frame" x="0.0" y="0.0" width="393" height="43.666667938232422"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <segue destination="hCO-tA-hf5" kind="show" identifier="EditContact" trigger="accessoryAction" id="iDN-fz-jsV"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
@@ -415,6 +418,9 @@
             <point key="canvasLocation" x="72.51908396946564" y="-509.15492957746483"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="iDN-fz-jsV"/>
+    </inferredMetricsTieBreakers>
     <resources>
         <image name="sample-834-bolt" width="17.333333969116211" height="18.666666030883789"/>
         <image name="sample-881-globe" width="18.666666030883789" height="18.666666030883789"/>

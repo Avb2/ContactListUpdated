@@ -16,6 +16,7 @@ class ContactsTableViewController: UITableViewController {
     override func viewDidLoad(){
         super.viewDidLoad()
         loadDataFromDatabase()
+        
     }
     
     override func didReceiveMemoryWarning(){
@@ -47,9 +48,19 @@ class ContactsTableViewController: UITableViewController {
         
         cell.textLabel?.text = contact?.city
         
+        cell.accessoryType = UITableViewCell.AccessoryType .detailDisclosureButton
         return cell
     }
     
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "EditContact" {
+            let contactController = segue.destination as? ContactsViewController
+            let selectedRow = self.tableView.indexPath(for:sender as! UITableViewCell)?.row
+            let selectedContact = contacts[selectedRow!] as? Contact
+            contactController?.currentContact = selectedContact!
+        }
+    }
 
     
     
